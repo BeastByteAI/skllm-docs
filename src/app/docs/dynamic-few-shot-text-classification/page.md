@@ -89,3 +89,4 @@ from skllm.models.gpt.classification.few_shot import DynamicFewShotGPTClassifier
 | `n_examples`      | `int`  | Number of closest examples per class to be retrieved, by default 3. |
 | `memory_index`      | `Optional[IndexConstructor]`  | Custom memory index, for details check `skllm.memory` submodule, by default None. |
 | `vectorizer`      | `Optional[BaseVectorizer]`  | Scikit-LLM vectorizer; if None, `GPTVectorizer` is used, by default None. |
+| `metric`  | `Optional[str]` | Metric used for similarity search by the memory_index, by default "euclidean" 
