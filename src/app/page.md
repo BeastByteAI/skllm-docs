@@ -54,7 +54,7 @@ Then, we can create a classifier instance and fit it using conventional scikit-l
 ```python
 from skllm.models.gpt.classification.zero_shot import ZeroShotGPTClassifier
 
-clf = ZeroShotGPTClassifier(model="gpt-4")
+clf = ZeroShotGPTClassifier(model="gpt-4-turbo")
 clf.fit(X,y)
 clf.predict(X)
 ```
