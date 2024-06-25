@@ -33,3 +33,4 @@ jobs:
         with:
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           publish_dir: ./out
+          cname: skllm.beastbyte.ai

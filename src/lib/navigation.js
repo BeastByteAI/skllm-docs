@@ -1,3 +1,4 @@
+
 export const navigation = [
   {
     title: 'Introduction',
@@ -29,17 +30,13 @@ export const navigation = [
       { title: 'Overview', href: '/docs/text-vectorization' },
     ],
   },
-  // {
-  //   title: 'Use cases',
-  //   links: [
-  //     { title: 'Building a RAG chatbot', href: '/docs/use-cases-rag-chatbot' },
-  //     {
-  //       title: 'Building a local chatbot',
-  //       href: '/docs/use-cases-local-chatbot',
-  //     },
-  //     { title: 'Building a RAG agent', href: '/docs/use-cases-rag-agent' },
-  //   ],
-  // },
+  {
+    title: 'Tagging',
+    links: [
+      { title: 'Overview', href: '/docs/tagging-overview' },
+      { title: 'Named Entity Recognition', href: '/docs/ner' },
+    ]
+  },
   {
     title: 'Contributing',
     links: [{ title: 'How to contribute', href: '/docs/how-to-contribute' }],
