@@ -42,6 +42,16 @@ const tags = {
       href: { type: String },
     },
   },
+  html: {
+    parse: true,
+    attributes: {
+      innerHTML: { type: String },
+    },
+    render: ({ innerHTML, children }) => {
+      console.log(innerHTML);
+      return <div dangerouslySetInnerHTML={{ __html: innerHTML }} />
+    },
+  },
 }
 
 export default tags
