@@ -13,6 +13,7 @@ export const navigation = [
       { title: 'Zero-shot text classification', href: '/docs/zero-shot-text-classification' },
       { title: 'Few-shot text classification', href: '/docs/few-shot-text-classification' },
       { title: 'Dynamic few-shot text classification', href: '/docs/dynamic-few-shot-text-classification' },
+      { title: 'Chain-of-thought text classification', href: '/docs/chain-of-thought-text-classification' },
       { title: 'Tunable text classification', href: '/docs/tunable-text-classification' },
     ],
   },

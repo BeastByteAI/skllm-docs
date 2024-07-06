@@ -10,7 +10,7 @@ nextjs:
 
 Few-shot text classification is a task of classifying a text into one of the pre-defined classes based on a few examples of each class. For example, given a few examples of the class _positive_, _negative_, and _neutral_, the model should be able to classify a new text into one of these classes.
 
-The estimators provided by Scikit-LLM do not automatically select the subset of the training data, and instead use the entire training set to construct the examples. Therefore, if your training set is large, you might want to consider splitting it into training and validation sets, while keeping the training set small (we recommend not to exceed 10 examples per class).
+The estimators provided by Scikit-LLM do not automatically select the subset of the training data, and instead use the entire training set to construct the examples. Therefore, if your training set is large, you might want to consider splitting it into training and validation sets, while keeping the training set small (we recommend not to exceed 10 examples per class). Additionally, it is advisable to permute the order of the samples in order to [avoid the recency bias](https://github.com/iryna-kondr/scikit-llm/issues/104).
 
 Example using GPT-4:
 
@@ -26,13 +26,13 @@ from skllm.datasets import (
 
 # single label
 X, y = get_classification_dataset()
-clf = FewShotGPTClassifier(model="gpt-4")
+clf = FewShotGPTClassifier(model="gpt-4o")
 clf.fit(X,y)
 labels = clf.predict(X)
 
 # multi-label
 X, y = get_multilabel_classification_dataset()
-clf = MultiLabelFewShotGPTClassifier(max_labels=2, model="gpt-4")
+clf = MultiLabelFewShotGPTClassifier(max_labels=2, model="gpt-4o")
 clf.fit(X,y)
 labels = clf.predict(X)
 ```
