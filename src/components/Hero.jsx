@@ -12,10 +12,9 @@ import blurRedImage from '@/images/blur-red-2.png'
 
 const codeLanguage = 'python'
 const code = 
-`from skllm.models.gpt.classification.zero_shot import 
-ZeroShotGPTClassifier
+`from skllm.classification import ZeroShotGPTClassifier
 
-clf = ZeroShotGPTClassifier(model="gpt-4-turbo")
+clf = ZeroShotGPTClassifier(model="gpt-4o")
 clf.fit(X,y)
 labels = clf.predict(X)`
 
