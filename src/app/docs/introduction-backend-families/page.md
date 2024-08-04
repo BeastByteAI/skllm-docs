@@ -45,19 +45,73 @@ SKLLMConfig.set_azure_api_base("<API_BASE>") # e.g. https://<YOUR_PROJECT_NAME>.
 
 When using the Azure backend, the model should be specified as `model = "azure::<model_deployment_name>"`. For example, if you created a _gpt-3.5_ deployment under the name _my-model_, you should use `model = "azure::my-model"`.
 
-### GPT4ALL
+### GGUF
 
-GPT4ALL is an open-source library that provides a unified API for multiple small-scale language models, that can be run locally on a consumer-grade hardware, even without a GPU. To use the GPT4ALL backend, you need to install the corresponding extension as follows:
+GGUF is an open-source binary file format designed for storing the quantized versions of model weights as well as high level model configurations. GGUF is primarily used in combination with the [Llama CPP](https://github.com/ggerganov/llama.cpp) project, but can also be loaded by some other runtimes.
 
-```bash
-pip install scikit-llm[gpt4all]
+In order to use GGUF models with scikit-llm, the llama-cpp and its python bindings have to be installed first.
+
+The installation command slightly varies depending on your hardware.
+
+CPU-only, all platforms:
+```bash 
+pip install scikit-llm[gguf] --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu --no-cache-dir
 ```
 
-Then, you can use the GPT4ALL by specifying the model as `model = "gpt4all::<model_name>"`, which will be downloaded automatically. For the full list of available models, please refer to the [GPT4ALL official documentation](https://gpt4all.io/index.html).
+GPU (CUDA 12.1+), Windows/Linux:
+```bash 
+pip install scikit-llm[gguf] --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu121 --no-cache-dir
+```
 
-{% callout title="Note" %}
-The models available through the GPT4ALL out of the box have very limited capabilities and are not recommended for most of the use cases. In addition, not all models are permitted for commercial use. Please check the license of the model you are using before deploying it in production.
-{% /callout %}
+GPU (Metal), MacOS, M-series Macs only: 
+```bash 
+pip install scikit-llm[gguf] --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/metal --no-cache-dir
+```
+
+Then, you can use the backend by specifying the model as `model = "gguf::<model_name>"`. The model will be downloaded automatically. 
+
+Currently, the following models are available:
+
+| **Model name** | **Size (GB)**  | Released (Year/Month) | Base model    |
+| -------------------- | ---- | ------- |------------------------------------------------------------------------------------------------ |
+| gemma2-2b-q6         | 2.3  | 2024/08 |[google/gemma-2-2b-it](https://huggingface.co/google/gemma-2-2b-it)                              |
+| gemma2-9b-q4         | 5.8  | 2024/06 |[google/gemma-2-9b-it](https://huggingface.co/google/gemma-2-9b-it)                              |
+| phi3-mini-q4         | 2.4  | 2024/06 |[microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct)      |
+| mistral0.3-7b-q4     | 4.4  | 2024/05 |[mistralai/Mistral-7B-Instruct-v0.3](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3)  |
+| llama3-8b-q4         | 4.9  | 2024/04 |[meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|
+
+For all of the models, the quantized version is used. The precision is indicated by the suffix in the name (e.g. `q4` stands for 4-bit quantization). By default, we choose the models with 4-bit quantization, but might decide to include models with lower/higher precision as well (for models with higher/lower number of parameters respectively). When picking the model for your use case, the following rule of thumb can be applied: 
+- q < 4 : Substantial performance loss, low size
+- q = 4 : Optimal trade-off between the loss and the size
+- 4 < q < 8 : Minimal performance loss, large size
+- q = 8 : Almost no performance loss, very large size
+
+In addition, there exist several quantization schemas of the same precision (e.g. for q4 those can be Q4_0, Q4_K_S, Q4_K_M, etc.). In order to keep it simpler for the users, we omit this information in the model name and select a single sub-type which we consider to be the most optimal.
+
+
+#### GPU acceleration
+
+GGUF models can be unloaded to a GPU (both fully and partially).
+
+The following command specifies the maximum number of GPU layers: 
+```python
+from skllm.config import SKLLMConfig
+
+SKLLMConfig.set_gguf_max_gpu_layers(-1)
+```
+ - 0 : all layers on the CPU
+ - -1 : all layers on the GPU
+ - n>0 : n layers on the GPU, remaining on the CPU 
+
+Note, that changing the configuration does not reload the model automatically (even if the new estimator is created afterwards). The models can be off-loaded from the memory as follows: 
+
+```python
+from skllm.llm.gpt.clients.llama_cpp.handler import ModelCache
+
+ModelCache.clear()
+```
+
+This command can also be handy when experimenting with different models in an interactive environment like JupyterNotebook, as the models remain in the memory until the termination of the process.
 
 ### Custom URL
 
@@ -105,3 +159,8 @@ Additionally, for tuning LLMs in Vertex, it is required to have to have 64 cores
 2.  Select “europe-west4” region (currently this is the only supported region).
 3.  Click on “Edit Quotas”, set the limit to 64 and submit the request.
     The request should be approved within a few hours, but it might take up to several days.
+
+
+## Third party integrations
+
+- [scikit-ollama](https://github.com/AndreasKarasenko/scikit-ollama): Scikit-Ollama provides scikit-llm estimators that allow to use self-hosted LLMs through [Ollama](https://ollama.com/).
