@@ -90,3 +90,21 @@ from skllm.models.gpt.classification.few_shot import DynamicFewShotGPTClassifier
 | `memory_index`      | `Optional[IndexConstructor]`  | Custom memory index, for details check `skllm.memory` submodule, by default None. |
 | `vectorizer`      | `Optional[BaseVectorizer]`  | Scikit-LLM vectorizer; if None, `GPTVectorizer` is used, by default None. |
 | `metric`  | `Optional[str]` | Metric used for similarity search by the memory_index, by default "euclidean" 
+
+### DynamicFewShotClaudeClassifier
+When using `DynamicFewShotClaudeClassifier`, you need to set up an OpenAI API key, since the classifier uses `GPTVectorizer` for computing embeddings.
+
+```python
+from skllm.models.claude.classification.few_shot import DynamicFewShotClaudeClassifier
+```
+
+| **Parameter** | **Type** | **Description** |
+| ------------- | -------- | --------------- |
+| `model` | `str` | Model to use, by default "claude-3-haiku-20240307" |
+| `default_label` | `str` | Default label for failed prediction; if "Random" -> selects randomly based on class frequencies |
+| `prompt_template` | `Optional[str]` | Custom prompt template to use, by default None |
+| `key` | `Optional[str]` | Estimator-specific API key; if None, retrieved from the global config |
+| `n_examples` | `int` | Number of closest examples per class to be retrieved, by default 3 |
+| `memory_index` | `Optional[IndexConstructor]` | Custom memory index, for details check `skllm.memory` submodule |
+| `vectorizer` | `Optional[BaseVectorizer]` | Scikit-LLM vectorizer; if None, `GPTVectorizer` is used |
+| `metric` | `Optional[str]` | Metric used for similarity search, by default "euclidean" |

@@ -14,9 +14,6 @@ Named Entity Recognition is an experimental feature and may be subject to instab
 
 Named Entity Recognition is a process of locating and classifying the named entities in a provided text. 
 
-
-Currently, Scikit-LLM has a single NER estimator (only works with the GPT family) called `Explainable NER`.
-
 Exemplary usage: 
 
 ```python
@@ -87,3 +84,18 @@ from skllm.models.gpt.tagging.ner import GPTExplainableNER
 | `key`      | `Optional[str]`  | Estimator-specific API key; if None, retrieved from the global config, by default None. |
 | `org`      | `Optional[str]`  | Estimator-specific ORG key; if None, retrieved from the global config, by default None. |
 | `num_workers`      | `Optional[int]`  | Number of workers (threads) to use, by default 1. |
+
+### AnthropicExplainableNER
+
+```python
+from skllm.models.anthropic.tagging.ner import AnthropicExplainableNER
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `entities` | dict | - | Dictionary of entities to recognize, with keys as entity names and values as descriptions |
+| `display_predictions` | bool | False | Whether to display predictions |
+| `sparse_output` | bool | True | Whether to generate a sparse representation of the predictions |
+| `model` | str | "claude-3-haiku-20240307" | Model to use |
+| `key` | Optional[str] | None | Estimator-specific API key; if None, retrieved from the global config |
+| `num_workers` | int | 1 | Number of workers (threads) to use |

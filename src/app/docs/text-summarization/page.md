@@ -47,3 +47,15 @@ from skllm.models.gpt.text2text.summarization import GPTSummarizer
 | `org`      | `Optional[str]`  | Estimator-specific ORG key; if None, retrieved from the global config, by default None. |
 | `max_words`      | `int`  | Soft limit of the summary length, by default 15. |
 | `focus`      | `Optional[str]`  | Concept in the text to focus on, by default None. |
+
+### ClaudeSummarizer
+```python
+from skllm.models.anthropic.text2text.summarization import ClaudeSummarizer
+```
+
+| **Parameter** | **Type** | **Description** |
+| ------------- | -------- | --------------- |
+| `model` | `str` | Model to use, by default "claude-3-haiku-20240307". |
+| `key` | `Optional[str]` | Estimator-specific API key; if None, retrieved from the global config, by default None. |
+| `max_words` | `int` | Soft limit of the summary length, by default 15. |
+| `focus` | `Optional[str]` | Concept in the text to focus on, by default None. |

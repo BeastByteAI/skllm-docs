@@ -38,3 +38,14 @@ from skllm.models.gpt.text2text.translation import GPTTranslator
 | `key`      | `Optional[str]`  | Estimator-specific API key; if None, retrieved from the global config, by default None. |
 | `org`      | `Optional[str]`  | Estimator-specific ORG key; if None, retrieved from the global config, by default None. |
 | `output_language`      | `str`  | Target language, by default "English". |
+
+### ClaudeTranslator
+```python
+from skllm.models.anthropic.text2text.translation import ClaudeTranslator
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `model` | `str` | Model to use, by default "claude-3-haiku-20240307" |
+| `key` | `Optional[str]` | Estimator-specific API key; if None, retrieved from the global config, by default None |
+| `output_language` | `str` | Target language, by default "English" |

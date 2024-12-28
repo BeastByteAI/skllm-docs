@@ -160,6 +160,21 @@ Additionally, for tuning LLMs in Vertex, it is required to have to have 64 cores
 3.  Click on “Edit Quotas”, set the limit to 64 and submit the request.
     The request should be approved within a few hours, but it might take up to several days.
 
+---
+
+## Anthropic Family
+
+The Anthropic family includes models that use the Anthropic API format, specifically the Claude series of models.
+
+## Claude (default)
+The Claude backend is the default backend for the Anthropic family. To use the Claude backend, you need to set your Anthropic API key as follows:
+```python
+from skllm.config import SKLLMConfig
+
+SKLLMConfig.set_anthropic_key("<YOUR_API_KEY>")
+```
+
+---
 
 ## Third party integrations
 

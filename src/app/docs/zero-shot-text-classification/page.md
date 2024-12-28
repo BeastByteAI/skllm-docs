@@ -124,3 +124,28 @@ from skllm.models.vertex.classification.zero_shot import MultiLabelZeroShotVerte
 | `default_label`      | `str`  | Default label for failed prediction; if "Random" -> selects randomly based on class frequencies, by default "Random". |
 | `max_labels`      | `Optional[int]`  | Maximum labels per sample, by default 5. |
 | `prompt_template`      | `Optional[str]`  | Custom prompt template to use, by default None. |
+
+### ZeroShotClaudeClassifier
+```python
+from skllm.models.anthropic.classification.zero_shot import ZeroShotClaudeClassifier
+```
+
+| **Parameter** | **Type** | **Description** |
+| ------------- | -------- | --------------- |
+| `model` | `str` | Model to use, by default "claude-3-haiku-20240307". |
+| `default_label` | `str` | Default label for failed predictions; if "Random", selects randomly based on class frequencies, by default "Random". |
+| `prompt_template` | `Optional[str]` | Custom prompt template to use, by default None. |
+| `key` | `Optional[str]` | Estimator-specific API key; if None, retrieved from the global config, by default None. |
+
+### MultiLabelZeroShotClaudeClassifier
+```python
+from skllm.models.anthropic.classification.zero_shot import MultiLabelZeroShotClaudeClassifier
+```
+
+| **Parameter** | **Type** | **Description** |
+| ------------- | -------- | --------------- |
+| `model` | `str` | Model to use, by default "claude-3-haiku-20240307". |
+| `default_label` | `str` | Default label for failed predictions; if "Random", selects randomly based on class frequencies, by default "Random". |
+| `max_labels` | `Optional[int]` | Maximum number of labels per sample, by default 5. |
+| `prompt_template` | `Optional[str]` | Custom prompt template to use, by default None. |
+| `key` | `Optional[str]` | Estimator-specific API key; if None, retrieved from the global config, by default None. |
